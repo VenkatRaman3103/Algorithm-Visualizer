@@ -1,0 +1,130 @@
+/* Stack view: the container, its boxes and the top pointer. */
+.st {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.st-meta {
+  display: flex;
+  gap: 22px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.st-meta div { display: flex; gap: 6px; }
+.st-meta dt { margin: 0; }
+.st-meta dd { margin: 0; color: var(--ink); font-family: var(--font-code); font-weight: 600; min-width: 1.2em; }
+
+/* Floor space on both sides: values to push wait on the right,
+   popped values are set down on the left. */
+.st-scene {
+  position: relative;
+  isolation: isolate;
+  padding: 96px var(--stage-space) 0;
+  --stage-space: 190px;
+}
+
+.st-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.st-row {
+  display: grid;
+  grid-template-columns: 190px 2.2em 6.5em;
+  align-items: center;
+  column-gap: 12px;
+}
+
+/* the container: two walls and a floor, open at the top */
+.st-lane {
+  padding: 4px 10px;
+  border-left: 4px solid var(--ink);
+  border-right: 4px solid var(--ink);
+}
+.st-row.is-bottom .st-lane {
+  padding-bottom: 10px;
+  border-bottom: 4px solid var(--ink);
+  border-radius: 0 0 12px 12px;
+}
+
+.st-index {
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.st-slot {
+  height: 52px;
+  border-radius: 8px;
+  border: 2px dashed transparent;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.st-slot.has-cap { border-color: color-mix(in srgb, var(--line) 60%, transparent); }
+.st-slot.hl-focus { border: 2px solid var(--removed); box-shadow: 0 0 0 4px var(--removed-soft); }
+
+/* a value box; it lives the whole time and only its transform changes */
+.st-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  font-family: var(--font-code);
+  font-size: 21px;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 2px solid var(--ink);
+  box-shadow: 0 3px 0 -1px var(--line);
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.st-box.is-flying { z-index: 3; box-shadow: 0 14px 22px -10px rgba(20, 30, 50, 0.45); }
+.st-box.hl-added { background: var(--added-soft); border-color: var(--added); color: var(--added); }
+.st-box.hl-read { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.st-box.hl-error,
+.st-box.is-rejected { border-color: var(--error); background: var(--error-soft); color: var(--error); }
+.st-box.is-out { background: var(--removed-soft); border-color: var(--removed); color: var(--removed); }
+
+.st-pointer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  will-change: transform;
+  transition: color 160ms ease;
+}
+.st-pointer::before {
+  content: "";
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 10px solid currentColor;
+}
+.st-pointer.is-below { color: var(--muted); font-weight: 400; }
+.st-pointer.is-error { color: var(--error); }
+
+@media (max-width: 620px) {
+  .st-scene { --stage-space: 104px; }
+  .st-row { grid-template-columns: 124px 1.8em 4em; column-gap: 8px; }
+  .st-box { font-size: 16px; }
+}

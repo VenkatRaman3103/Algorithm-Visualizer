@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stack</title>
+  <link rel="stylesheet" href="../core/player.css">
+  <link rel="stylesheet" href="stack-view.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../core/visualizer-core.js"></script>
+  <script src="../core/player.js"></script>
+  <script src="../core/motion.js"></script>
+  <script src="stack-base.js"></script>
+  <script src="stack-view.js"></script>
+  <script>
+    AlgoViz.mountPlayer({
+      root: '#app',
+      title: 'Stack',
+      defaultImpl: 'my-stack.js',
+      createView: AlgoViz.views.stack,
+      contractHint: [
+        'class MyStack extends StackBase {',
+        '  items = [];        // required',
+        '  top = -1;          // optional',
+        '  capacity = 5;      // optional',
+        '',
+        '  push(value) { }',
+        '  pop() { }',
+        '  peek() { }',
+        '  isEmpty() { }',
+        '  // optional: isFull(), size()',
+        '',
+        '  static scenario(stack) {',
+        '    stack.push(10);',
+        '    stack.pop();',
+        '  }',
+        '}',
+        '',
+        'Visualizer.register(MyStack);',
+      ].join('\n'),
+    });
+  </script>
+</body>
+</html>
