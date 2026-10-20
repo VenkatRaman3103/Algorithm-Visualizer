@@ -1,0 +1,77 @@
+/* The shared formula line: symbols, the numbers that fly in, and the result. */
+.fm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 82px;
+  font-family: var(--font-code);
+  font-size: 16px;
+  white-space: nowrap;
+  will-change: opacity;
+}
+.fm-note {
+  padding: 1px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.fm-row { display: flex; align-items: baseline; }
+.fm-target { font-weight: 700; color: var(--added); }
+.fm-sym { color: var(--accent); font-weight: 600; }
+.fm-op { color: var(--muted); white-space: pre; }
+.fm-slot {
+  display: inline-block;
+  min-width: 1.4em;
+  padding: 0 3px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 2px dotted var(--line);
+  transition: background-color 180ms ease, color 180ms ease, opacity 180ms ease;
+}
+.fm-slot.is-empty { color: transparent; }
+.fm-slot.is-win { background: var(--added-soft); color: var(--added); border-bottom-color: var(--added); }
+.fm-slot.is-lose { opacity: 0.4; text-decoration: line-through; }
+.fm-result {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 800;
+  color: var(--surface);
+  background: var(--added);
+}
+.fm-result.is-empty { background: transparent; color: transparent; }
+
+/* a number flying between where it lives and the formula */
+.fm-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  height: 26px;
+  min-width: 30px;
+  padding: 0 7px;
+  border-radius: 13px;
+  font-family: var(--font-code);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  box-shadow: 0 8px 16px -8px rgba(20, 30, 50, 0.5);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.fm-chip.is-result { color: var(--added); border-color: var(--added); }
+
+@media (max-width: 620px) {
+  .fm { font-size: 12px; }
+}
